@@ -1,40 +1,85 @@
 // URL for the instructions: 
 // https://education.launchcode.org/intro-to-professional-web-dev/chapters/typescript/exercises.html 
 
+import { SpaceLocation } from './SpaceLocation';
 
 // Part 1: Declare (5) Variables With Type
 
-
+let spacecraftName: string = "Deternination";
+let speedMph: number = 17500;
+let kilometersToMars: number = 225000000;
+let kilometersToTheMoon: number = 384400;
+let milesPerKilometer: number = .0621;
 
 // Part 2: Print Days to Mars
+let milesToMars: number = kilometersToMars*milesPerKilometer;
+let hoursToMars: number = milesToMars/speedMph;
+let daysToMars: number = hoursToMars/24;
 
 
 
 // Code an output statement here (use a template literal):
 
+console.log(`${spacecraftName} takes ${daysToMars} days to Mars`);
 
 
 // Part 3: Create a Function ("getDaysToLocation")
 
+function getDaysToLocation(kilometersAway:number): number{
+    let milesAway:number = kilometersAway/milesPerKilometer;
+    let hoursToLocations:number = milesAway/speedMph;
+    let daysToLocation:number = hoursToLocations/24;
+
+    return daysToLocation;
+}
 
 
 // Move your output statement from part 2 here. Update the template literal to call
 // the function and print the outputs for a Mars trip and a moon trip.
 
+console.log(`${spacecraftName} takes ${getDaysToLocation(kilometersToMars)} days to Mars`);
+
+console.log(`${spacecraftName} takes ${getDaysToLocation(kilometersToTheMoon)} days to the Moon`);
 
 
 
 // Part 4: Create a Spacecraft Class
 
+class Spacecraft {
 
+    milesPerKilometer: number = 0.621;
+    name: string;
+    speedMph: number;
+
+    constructor(name: string, speedMph: number) {
+        this.name = name;
+        this.speedMph = speedMph;
+     }
+  
+     getDaysToLocation(kilometersAway: number): number {
+        let milesAway: number = kilometersAway * this.milesPerKilometer;
+        let hoursToMars: number = milesAway / this.speedMph;
+        return hoursToMars / 24;
+     }
+
+     printDaysToLocation(location: SpaceLocation) {
+        console.log(`${this.name} would take ${this.getDaysToLocation(location.kilometersAway)} days to get to ${location.name}.`);
+     }
+
+}
 
 
 // Create an instance of the class here:
 
-
+let spaceShuttle = new Spacecraft('Determination', 17500);
 
 // Move your output statements from part 3 here. Update the template literals use the
 // instance of the class.
+
+console.log(`${spaceShuttle.name} takes ${spaceShuttle.getDaysToLocation(kilometersToMars)} days to Mars`);
+
+console.log(`${spaceShuttle.name} takes ${spaceShuttle.getDaysToLocation(kilometersToTheMoon)} days to the Moon`);
+
 
 
 
@@ -43,5 +88,8 @@
 
 
 // Add the printDaysToLocation function to the Spacecraft class.
+
+spaceShuttle.printDaysToLocation(new SpaceLocation('Mars', kilometersToMars));
+spaceShuttle.printDaysToLocation(new SpaceLocation('the Moon', kilometersToTheMoon));
 
 // Paste in the code from step 6 here:
